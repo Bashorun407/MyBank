@@ -1,8 +1,10 @@
 package com.akinovapp.mybank.email.emailService;
 
 import com.akinovapp.mybank.email.emailDto.EmailDetail;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -15,10 +17,12 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.Objects;
 
+
 @Service
 public class EmailServiceImpl implements IEmailService {
     @Autowired
     private JavaMailSender javaMailSender;
+
     @Value("${spring.mail.username}")
     private String senderMail;
 

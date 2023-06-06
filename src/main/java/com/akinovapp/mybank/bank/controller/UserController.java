@@ -7,14 +7,16 @@ import com.akinovapp.mybank.bank.dto.UserDto;
 import com.akinovapp.mybank.bank.entity.User;
 import com.akinovapp.mybank.bank.service.UserServiceImpl;
 import com.akinovapp.mybank.response.ResponsePojo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/mybank")
+@RequestMapping("/myBank")
 public class UserController {
+
 
     private final UserServiceImpl userService;
 

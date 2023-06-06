@@ -1,5 +1,6 @@
 com\akinovapp\mybank\bank\service\IUserService.class
 com\akinovapp\mybank\bank\dto\TransferRequest$TransferRequestBuilder.class
+com\akinovapp\mybank\bank\entity\QUser.class
 com\akinovapp\mybank\bank\dto\Data.class
 com\akinovapp\mybank\bank\dto\TransactionRequest.class
 com\akinovapp\mybank\response\ResponsePojo.class
@@ -20,6 +21,7 @@ com\akinovapp\mybank\email\emailService\IEmailService.class
 com\akinovapp\mybank\bank\service\TransactionServiceImpl.class
 com\akinovapp\mybank\bank\controller\UserController.class
 com\akinovapp\mybank\exception\ApiException.class
+com\akinovapp\mybank\bank\entity\QTransaction.class
 com\akinovapp\mybank\bank\entity\Transaction.class
 com\akinovapp\mybank\bank\service\UserServiceImpl.class
 com\akinovapp\mybank\email\emailController\EmailController.class

@@ -10,6 +10,7 @@ import com.akinovapp.mybank.email.emailService.EmailServiceImpl;
 import com.akinovapp.mybank.exception.ApiException;
 import com.akinovapp.mybank.response.ResponsePojo;
 import com.akinovapp.mybank.response.ResponseUtils;
+
 import org.springframework.stereotype.Service;
 
 
@@ -22,8 +23,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements IUserService{
 
+
     private final UserRepository userRepository;
+
     private final TransactionServiceImpl transactionService;
+
     private final EmailServiceImpl emailService;
 
     //Class Constructor
@@ -36,6 +40,7 @@ public class UserServiceImpl implements IUserService{
     //1) Method to create user
     @Override
     public ResponsePojo<User> createUser(UserDto userDto){
+
 
         boolean userExist = userRepository.existsByEmail(userDto.getEmail());
 

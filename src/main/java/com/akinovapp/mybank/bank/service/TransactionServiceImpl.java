@@ -3,6 +3,7 @@ package com.akinovapp.mybank.bank.service;
 import com.akinovapp.mybank.bank.dto.TransactionDto;
 import com.akinovapp.mybank.bank.entity.Transaction;
 import com.akinovapp.mybank.bank.repository.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
