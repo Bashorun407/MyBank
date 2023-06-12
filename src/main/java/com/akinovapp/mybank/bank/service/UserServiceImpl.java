@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService{
 
         //Check that user does not exist...else, throw an exception
         if (userExist)
-            throw new ApiException(ResponseUtils.USER_FOUND_MESSAGE);
+            throw new ApiException(ResponseUtils.USER_EXISTS_MESSAGE);
 
         //If no user with similar email is not found, create a new user
         User newUser = User.builder()
@@ -111,12 +111,11 @@ public class UserServiceImpl implements IUserService{
     @Override
     public ResponsePojo<Optional<User>> findUserById(Long id){
         Optional<User> userOptional = userRepository.findById(id);
-
+        //if user does not exist, throw an exception
+        userOptional.orElseThrow(()-> new ApiException(String.format("User with this id: %d does not exist", id)));
         //checking that IN-ACTIVE USERS ARE NOT CALLED
         if(userOptional.get().getStatus().equals(ResponseUtils.NON_ACTIVE))
             throw new ApiException("Account of this user has been deactivated.");
-        //if user does not exist, throw an exception
-        userOptional.orElseThrow(()-> new ApiException(String.format("User with this id: %d does not exist", id)));
 
         ResponsePojo<Optional<User>> responsePojo = new ResponsePojo<>();
         responsePojo.setStatusCode(ResponseUtils.SUCCESS);
@@ -132,11 +131,12 @@ public class UserServiceImpl implements IUserService{
     public ResponsePojo<Optional<User>> findUserByAccountNumber(String accountNumber){
         Optional<User> userOptional = userRepository.findByAccountNumber(accountNumber);
 
+        //if user does not exist, throw an exception
+        userOptional.orElseThrow(()-> new ApiException(String.format("User with this account number: %s does not exist", accountNumber)));
         //checking that IN-ACTIVE USERS ARE NOT CALLED
         if(userOptional.get().getStatus().equals(ResponseUtils.NON_ACTIVE))
             throw new ApiException("Account of this user has been deactivated.");
-        //if user does not exist, throw an exception
-        userOptional.orElseThrow(()-> new ApiException(String.format("User with this account number: %s does not exist", accountNumber)));
+
 
         ResponsePojo<Optional<User>> responsePojo = new ResponsePojo<>();
         responsePojo.setStatusCode(ResponseUtils.SUCCESS);
@@ -161,7 +161,8 @@ public class UserServiceImpl implements IUserService{
         EmailDetail emailDetail = EmailDetail.builder()
                 .recipient(user.getEmail())
                 .emailSubject("ACCOUNT DETAILS")
-                .emailBody(String.format("Dear %s %s, your account has been successfully updated." +
+                .emailBody(String.format("Dear %s %s, \n In response to your request for your account details," +
+                        " your account details are given below:  ." +
                         "\n Thanks for banking with us.\n Akinov Bank \n" +
                                 "\n Account Details:\n" +
                         accountDetails, user.getLastName(), user.getFirstName()))

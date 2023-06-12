@@ -6,10 +6,12 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity(name = "transaction")
 @Builder
-public class Transaction {
+public class  Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
