@@ -4,8 +4,11 @@ package com.akinovapp.mybank.bank.entity;
 import javax.persistence.*;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,4 +23,6 @@ public class  Transaction {
     private String transactionType;
     private String accountNumber;
     private BigDecimal amount;
+    @CreationTimestamp
+    private LocalDate createdAt;
 }

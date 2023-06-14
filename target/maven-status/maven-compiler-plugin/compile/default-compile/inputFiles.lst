@@ -7,8 +7,8 @@ C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\aki
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\response\ResponsePojo.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\response\ResponseUtils.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\email\emailDto\EmailDetail.java
+C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\config\JwtAuthenticationFilter.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\entity\User.java
-C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\securityConfig\BankSecurityConfiguration.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\MybankApplication.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\service\ITransactionService.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\entity\Transaction.java
@@ -16,9 +16,11 @@ C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\aki
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\exception\ApiException.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\dto\TransferRequest.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\repository\TransactionRepository.java
+C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\entity\UserRole.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\target\generated-sources\java\com\akinovapp\mybank\bank\entity\QUser.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\dto\TransactionDto.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\email\emailService\EmailServiceImpl.java
+C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\config\BankSecurityConfiguration.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\target\generated-sources\java\com\akinovapp\mybank\bank\entity\QTransaction.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\controller\UserController.java
 C:\Users\Akinbobola Oluwaseyi\Desktop\Java Projects\mybank\src\main\java\com\akinovapp\mybank\bank\dto\UserDto.java

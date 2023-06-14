@@ -19,6 +19,7 @@ public class UserDto {
     private String accountNumber;
     private BigDecimal accountBalance;
     private String email;
+    private String password;
     private String phoneNumber;
     private String alternativeNumber;
     private String status;

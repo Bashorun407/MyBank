@@ -23,6 +23,8 @@ public class QTransaction extends EntityPathBase<Transaction> {
 
     public final NumberPath<java.math.BigDecimal> amount = createNumber("amount", java.math.BigDecimal.class);
 
+    public final DatePath<java.time.LocalDate> createdAt = createDate("createdAt", java.time.LocalDate.class);
+
     public final NumberPath<Long> transactionId = createNumber("transactionId", Long.class);
 
     public final StringPath transactionType = createString("transactionType");

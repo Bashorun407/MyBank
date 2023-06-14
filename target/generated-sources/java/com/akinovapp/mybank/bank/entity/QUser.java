@@ -45,7 +45,11 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath otherName = createString("otherName");
 
+    public final StringPath password = createString("password");
+
     public final StringPath phoneNumber = createString("phoneNumber");
+
+    public final EnumPath<UserRole> role = createEnum("role", UserRole.class);
 
     public final StringPath stateOfOrigin = createString("stateOfOrigin");
 
