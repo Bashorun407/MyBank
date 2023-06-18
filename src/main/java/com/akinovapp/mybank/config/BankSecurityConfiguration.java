@@ -1,56 +1,46 @@
 package com.akinovapp.mybank.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class BankSecurityConfiguration {
+
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+
     @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails firstUser = User.withUsername("olusheyi")
-                .password("1234")
-                .roles("ADMIN")
-                .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        UserDetails secondUser = User.withUsername("user")
-                .password(passwordEncoder().encode("11112"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(firstUser, secondUser);
+
+        http
+                .csrf()
+                .disable()
+                .authorizeRequests()
+
+                .regexMatchers("/api/v1/auth/myBank/(.*)")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+                return http.build();
+
     }
-
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//      return  httpSecurity.csrf((csrf)->csrf.disable()
-//                .authorizeHttpRequests(authorize -> {
-//                    authorize
-//                            .requestMatchers("/mybank/createUser").permitAll();
-//                }));
-//    }
-//
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-//    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//        /*
-//        disable csrf
-//        authorize certain requests
-//         */
-//
-//        return httpSecurity.csrf().disable()
-//
-//                .authorizeHttpRequests("/api/myBank/createUser").
-//
-//                .build();
-//    }
-
-
 }

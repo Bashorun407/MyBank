@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/myBank")
+@RequestMapping("/api/v1/auth/myBank")
 public class UserController {
 
 
@@ -46,6 +46,10 @@ public class UserController {
         return  userService.findUserByAccountNumber(accountNumber);
     }
 
+    @GetMapping("/userByEmail/{email}")
+    public ResponsePojo<Optional<User>> findUserByEmail(@PathVariable(name = "email") String email){
+        return  userService.findUserByEmail(email);
+    }
     //4) Method to display account balance to user
     @GetMapping("/balanceEnquiry/{accountNumber}")
     public ResponsePojo<Data> balanceEnquiry(@PathVariable(name = "accountNumber") String accountNumber){

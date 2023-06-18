@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/email")
+@RequestMapping("/api/v1/auth/myBank")
 public class EmailController {
     @Autowired
     private EmailServiceImpl emailService;

@@ -3,14 +3,18 @@ package com.akinovapp.mybank.bank.service;
 import com.akinovapp.mybank.bank.dto.*;
 
 import com.akinovapp.mybank.bank.entity.User;
+import com.akinovapp.mybank.bank.entity.UserRole;
 import com.akinovapp.mybank.bank.repository.UserRepository;
+import com.akinovapp.mybank.config.JwtService;
 import com.akinovapp.mybank.email.emailDto.EmailDetail;
 import com.akinovapp.mybank.email.emailService.EmailServiceImpl;
 
 import com.akinovapp.mybank.exception.ApiException;
+import com.akinovapp.mybank.response.AuthenticationResponse;
 import com.akinovapp.mybank.response.ResponsePojo;
 import com.akinovapp.mybank.response.ResponseUtils;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -29,12 +33,20 @@ public class UserServiceImpl implements IUserService{
     private final TransactionServiceImpl transactionService;
 
     private final EmailServiceImpl emailService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
 
     //Class Constructor
-    public UserServiceImpl(UserRepository userRepository, TransactionServiceImpl transactionService, EmailServiceImpl emailService) {
+    public UserServiceImpl(UserRepository userRepository, TransactionServiceImpl transactionService,
+                           EmailServiceImpl emailService, PasswordEncoder passwordEncoder,
+                           JwtService jwtService, AuthenticationService authenticationService) {
         this.userRepository = userRepository;
         this.transactionService = transactionService;
         this.emailService = emailService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationService = authenticationService;
     }
 
     //1) Method to create user
@@ -59,6 +71,8 @@ public class UserServiceImpl implements IUserService{
                 .accountNumber(ResponseUtils.generateAccountNumber(10))
                 .accountBalance(BigDecimal.valueOf(1500.00))
                 .email(userDto.getEmail())
+                .password(passwordEncoder.encode(userDto.getPassword())) //'encrypting' user password before saving to repository
+                .role(UserRole.USER)
                 .phoneNumber(userDto.getPhoneNumber())
                 .alternativeNumber(userDto.getAlternativeNumber())
                 .status(ResponseUtils.ACTIVE)
@@ -68,7 +82,28 @@ public class UserServiceImpl implements IUserService{
         //Saving new user to repository
          User savedUser = userRepository.save(newUser);
 
-         String accountDetails = savedUser.getLastName() + "," + savedUser.getFirstName() + " " + savedUser.getOtherName()
+         //Spring security to register
+        RegisterRequest registerRequest = RegisterRequest.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .build();
+
+        //Call to register user
+        authenticationService.register(registerRequest);
+
+        //Spring security to authenticate user
+        AuthenticationRequest authenticationRequest = AuthenticationRequest.builder()
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .build();
+
+        //call to authenticate user
+
+        AuthenticationResponse authResponse = authenticationService.authenticate(authenticationRequest);
+
+        String accountDetails = savedUser.getLastName() + "," + savedUser.getFirstName() + " " + savedUser.getOtherName()
                  + " \n" + savedUser.getAccountNumber() + "\n" + savedUser.getAccountBalance();
 
         //Creating an object of EmailDetail
@@ -85,7 +120,7 @@ public class UserServiceImpl implements IUserService{
         //Return response to caller
         ResponsePojo<User> responsePojo = new ResponsePojo<>();
         responsePojo.setStatusCode(ResponseUtils.SUCCESS);
-        responsePojo.setMessage(ResponseUtils.USER_REGISTERED_SUCCESS);
+        responsePojo.setMessage(ResponseUtils.USER_REGISTERED_SUCCESS + "\n authentication: " + authResponse);
         responsePojo.setData(savedUser);
 
         return responsePojo;
@@ -133,6 +168,25 @@ public class UserServiceImpl implements IUserService{
 
         //if user does not exist, throw an exception
         userOptional.orElseThrow(()-> new ApiException(String.format("User with this account number: %s does not exist", accountNumber)));
+        //checking that IN-ACTIVE USERS ARE NOT CALLED
+        if(userOptional.get().getStatus().equals(ResponseUtils.NON_ACTIVE))
+            throw new ApiException("Account of this user has been deactivated.");
+
+
+        ResponsePojo<Optional<User>> responsePojo = new ResponsePojo<>();
+        responsePojo.setStatusCode(ResponseUtils.SUCCESS);
+        responsePojo.setMessage(ResponseUtils.USER_FOUND_MESSAGE);
+        responsePojo.setData(userOptional);
+
+        return responsePojo;
+    }
+
+    @Override
+    public ResponsePojo<Optional<User>> findUserByEmail(String email){
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        //if user does not exist, throw an exception
+        userOptional.orElseThrow(()-> new ApiException(String.format("User with this account number: %s does not exist", email)));
         //checking that IN-ACTIVE USERS ARE NOT CALLED
         if(userOptional.get().getStatus().equals(ResponseUtils.NON_ACTIVE))
             throw new ApiException("Account of this user has been deactivated.");

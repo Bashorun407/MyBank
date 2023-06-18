@@ -15,6 +15,7 @@ public interface IUserService {
     ResponsePojo<List<User>> fetchAllUsers();
     ResponsePojo<Optional<User>> findUserById(Long id);
     ResponsePojo<Optional<User>> findUserByAccountNumber(String accountNumber);
+    ResponsePojo<Optional<User>> findUserByEmail(String email);
     ResponsePojo<Data> balanceEnquiry(String accountNumber);
 
     ResponsePojo<Data> creditAccount(TransactionRequest transactionRequest);
