@@ -28,7 +28,6 @@ public class BankSecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-
                 .regexMatchers("/api/v1/auth/myBank/(.*)")
                 .permitAll()
                 .anyRequest()
@@ -39,7 +38,6 @@ public class BankSecurityConfiguration {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
                 return http.build();
 
     }
