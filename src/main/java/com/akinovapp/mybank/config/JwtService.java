@@ -5,13 +5,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +17,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String STRING_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCq5i4HBECYGXAKbD3+4SQiYG3XQP1YhbeNTfQmfliHFj6tgOoD0dv7ZdT3VcV0FgRagOfOR19iH9DOw4bpJ9mGivV61bmbAa72ITcGh306Ow1HEfgNZVwJLrMBcy4i+392XYlaz+V4Cs6504j45fUlBPZtPGzxH8yWunm8pwDJNQIDAQAB";
+    private static final String STRING_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCq5i4HBECYGXAKbD3+4SQiYG3XQP1YhbeNTf" +
+            "QmfliHFj6tgOoD0dv7ZdT3VcV0FgRagOfOR19iH9DOw4bpJ9mGivV61bmbAa72ITcGh306Ow1HEfgNZVwJLrMBcy4i+392XYlaz+V4Cs650" +
+            "4j45fUlBPZtPGzxH8yWunm8pwDJNQIDAQAB";
 
     //1) Method to get SignIn key
     private Key getSignInKey() {
